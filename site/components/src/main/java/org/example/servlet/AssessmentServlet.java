@@ -2,6 +2,8 @@ package org.example.servlet;
 
 import org.hippoecm.hst.site.HstServices;
 import javax.jcr.*;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryResult;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest; import javax.servlet.http.HttpServletResponse; import java.io.IOException;
@@ -11,10 +13,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AssessmentServlet extends HttpServlet {
-    
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String search = request.getParameter("search");
+        Repository repository = HstServices.getComponentManager().getComponent(Repository.class.getName());
+        Session session = null;
+        try {
+            session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
+            Query q = session.getWorkspace().getQueryManager().createQuery("//*[jcr:contains(.,'"+search+"')]",Query.XPATH);
+            QueryResult r = q.execute();
 
+            PrintWriter printWriter = response.getWriter();
+            printWriter.println("<html>");
+            printWriter.println("<head><title>Search Result</title></title>");
+            printWriter.println("<body>");
+            printWriter.println("<h2>Number of results found for '"+search+"' : "+ r.getRows().getSize() +"</h2>");
+            printWriter.println("<ol>");
+            for (NodeIterator i = r.getNodes(); i.hasNext(); ) {
+                Node n = i.nextNode();
+                printWriter.println("<li>jcr:name = " +n.getName() +
+                        "<br> jcr:path = " +n.getPath()+
+                        "<br> jcr:primaryType = " + n.getPrimaryNodeType() +
+                        " </li>");
+            }
+            printWriter.println("</ol>");
+            printWriter.println("</body></html>");
 
+        } catch (RepositoryException e) {
+            log.error(e.getMessage());
+        } finally {
+            session.logout();
+        }
     }
     private static Logger log = LoggerFactory.getLogger(AssessmentServlet.class);
 
@@ -33,7 +63,7 @@ public class AssessmentServlet extends HttpServlet {
             ListNodesAssessment(session,printWriter);
 
             //2.4 Querying assessment
-            QueryingAssessment(session, printWriter);
+            QueryingAssessment(printWriter);
 
             printWriter.println("</body></html>");
         } catch (RepositoryException e) {
@@ -79,13 +109,12 @@ public class AssessmentServlet extends HttpServlet {
     /**
      * Querying Assessment method to execute queries against the repository for some user entered text
      * and display the names and properties of all the nodes that contain that text.
-     * @param session Session of the user
      * @param printWriter print Writer to print names of sub node
      */
-    private void QueryingAssessment(Session session, PrintWriter printWriter) {
-        printWriter.println("<h2>All the nodes that contain user entered text</h2>");
+    private void QueryingAssessment(PrintWriter printWriter) {
+        printWriter.println("<h2>Search all nodes : </h2>");
         printWriter.println("<form action=\"/site/assessment\" method=\"post\">");
-        printWriter.println("<span class=\"icon\">Search Node</i></span>");
+        printWriter.println("<span class=\"icon\">Search Node : </i></span>");
         printWriter.println("<input type=\"search\" id=\"search\" name=\"search\" placeholder=\"Search\"/>");
         printWriter.println("</form>");
     }
