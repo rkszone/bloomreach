@@ -1,0 +1,4 @@
+/content/documents/Assessment Test folder/Sub folder 2:
+  jcr:primaryType: hcm:contentfolder
+  /Folder Level 3:
+    jcr:primaryType: hcm:contentfolder

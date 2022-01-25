@@ -1,6 +1,8 @@
 /content/documents/myproject:
+  .meta:order-before: Assessment Test Node
   jcr:primaryType: hippostd:folder
   jcr:mixinTypes: ['hippo:named', 'hippotranslation:translated', 'mix:referenceable']
+  jcr:uuid: 07e48038-0bf8-4d13-91e4-ba7a489b4f55
   hippo:name: My Project
   hippostd:foldertype: [new-translated-folder, new-document]
   hippotranslation:id: 996bcac5-86cf-49b5-a7a3-16a74863e814
