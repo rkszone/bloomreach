@@ -4,7 +4,6 @@ import org.hippoecm.hst.site.HstServices;
 import javax.jcr.*;
 import javax.jcr.query.Query;
 import javax.jcr.query.QueryResult;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest; import javax.servlet.http.HttpServletResponse; import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,9 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AssessmentServlet extends HttpServlet {
+    private static Logger log = LoggerFactory.getLogger(AssessmentServlet.class);
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String search = request.getParameter("search");
         Repository repository = HstServices.getComponentManager().getComponent(Repository.class.getName());
         Session session = null;
@@ -46,10 +46,9 @@ public class AssessmentServlet extends HttpServlet {
             session.logout();
         }
     }
-    private static Logger log = LoggerFactory.getLogger(AssessmentServlet.class);
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Repository repository = HstServices.getComponentManager().getComponent(Repository.class.getName());
         Session session = null;
         try {
