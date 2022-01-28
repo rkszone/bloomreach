@@ -16,7 +16,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable>{
      */
     public Response toResponse(Throwable ex) {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(new Error(ex.getMessage()))
+                .entity(new Error(String.format("Rest Exception Mapper : {0}",ex.getMessage())))
                 .build();
     }
 
