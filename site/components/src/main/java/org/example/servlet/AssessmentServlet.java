@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AssessmentServlet extends HttpServlet {
-    private static Logger log = LoggerFactory.getLogger(AssessmentServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(AssessmentServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -30,7 +30,8 @@ public class AssessmentServlet extends HttpServlet {
             printWriter.println("<body>");
             printWriter.println("<h2>Number of results found for '"+search+"' : "+ r.getRows().getSize() +"</h2>");
             printWriter.println("<ol>");
-            for (NodeIterator i = r.getNodes(); i.hasNext(); ) {
+            NodeIterator i = r.getNodes();
+            while (i.hasNext()) {
                 Node n = i.nextNode();
                 printWriter.println("<li>jcr:name = " +n.getName() +
                         "<br> jcr:path = " +n.getPath()+
@@ -59,10 +60,10 @@ public class AssessmentServlet extends HttpServlet {
             printWriter.println("<body>");
 
             //2.3 List nodes assessment
-            ListNodesAssessment(session,printWriter);
+            listNodesAssessment(session,printWriter);
 
             //2.4 Querying assessment
-            QueryingAssessment(printWriter);
+            queryingAssessment(printWriter);
 
             printWriter.println("</body></html>");
         } catch (RepositoryException e) {
@@ -79,7 +80,7 @@ public class AssessmentServlet extends HttpServlet {
      * @param printWriter print Writer to print names of sub node
      * @throws RepositoryException RepositoryException will be thrown if jcr throw exception
      */
-    private void ListNodesAssessment(Session session, PrintWriter printWriter) throws RepositoryException {
+    private void listNodesAssessment(Session session, PrintWriter printWriter) throws RepositoryException {
         String parentNodePath = "content/documents";
         Node node = session.getRootNode().getNode(parentNodePath);
         printWriter.println("<h2>All the nodes under /"+parentNodePath+"/</h2>");
@@ -110,7 +111,7 @@ public class AssessmentServlet extends HttpServlet {
      * and display the names and properties of all the nodes that contain that text.
      * @param printWriter print Writer to print names of sub node
      */
-    private void QueryingAssessment(PrintWriter printWriter) {
+    private void queryingAssessment(PrintWriter printWriter) {
         printWriter.println("<h2>Search all nodes : </h2>");
         printWriter.println("<form action=\"/site/assessment\" method=\"post\">");
         printWriter.println("<span class=\"icon\">Search Node : </i></span>");

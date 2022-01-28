@@ -18,18 +18,28 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * BaseNodeResource for provide searching and listing of nodes
+ * and showing the detail of the node specified by part of URI path
+ */
 @Path("/api")
 @Produces({MediaType.APPLICATION_JSON})
 public class BaseNodeResource extends BaseRestResource {
 
     private static final Logger log = LoggerFactory.getLogger(BaseNodeResource.class);
 
-    INodeService nodeService;
+    private final INodeService nodeService;
 
     public BaseNodeResource() {
         nodeService = new NodeServiceImpl();
     }
 
+    /**
+     * Get list of Nodes of repository root
+     * Or List of nodes based on search query
+     * @param queryParam search text
+     * @return Response entity of list of node document
+     */
     @GET
     @Path("/nodes")
     public ResponseEntity<List<NodeDocument>> getNodes(@QueryParam("q") String queryParam) {
@@ -47,6 +57,11 @@ public class BaseNodeResource extends BaseRestResource {
         return new ResponseEntity<>(nodeDocuments, HttpStatus.OK);
     }
 
+    /**
+     * Get node based on uuid or path of node
+     * @param identifier is either uuid or path of node
+     * @return Response entity of node document
+     */
     @GET
     @Path("/nodes/{identifier:.+}")
     public ResponseEntity<NodeDocument> getNodeWithIdentifier(@PathParam("identifier") String identifier) {
