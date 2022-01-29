@@ -23,12 +23,6 @@
             </bean>
           </constructor-arg>
         </bean>
-        <bean class="org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider">
-          <constructor-arg>
-            <bean class="org.example.connector.RConnector">
-            </bean>
-          </constructor-arg>
-        </bean>
       </list>
     </property>
   </bean>

@@ -1,5 +1,6 @@
 package org.example.servlet;
 
+import org.example.helper.PropertyHelper;
 import org.hippoecm.hst.site.HstServices;
 import javax.jcr.*;
 import javax.jcr.query.Query;
@@ -15,12 +16,14 @@ public class AssessmentServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(AssessmentServlet.class);
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String search = request.getParameter("search");
         Repository repository = HstServices.getComponentManager().getComponent(Repository.class.getName());
-        Session session = null;
+        Session session;
         try {
-            session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
+
+            session = repository.login(new SimpleCredentials(PropertyHelper.getProperty("cms.user.name"),
+                    PropertyHelper.getProperty("cms.user.password").toCharArray()));
             Query q = session.getWorkspace().getQueryManager().createQuery("//*[jcr:contains(.,'"+search+"')]",Query.XPATH);
             QueryResult r = q.execute();
 
@@ -41,17 +44,15 @@ public class AssessmentServlet extends HttpServlet {
             printWriter.println("</ol>");
             printWriter.println("</body></html>");
 
-        } catch (RepositoryException e) {
+        } catch (RepositoryException | IOException e) {
             log.error(e.getMessage());
-        } finally {
-            session.logout();
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Repository repository = HstServices.getComponentManager().getComponent(Repository.class.getName());
-        Session session = null;
+        Session session;
         try {
             session = repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
             PrintWriter printWriter = response.getWriter();
@@ -66,10 +67,8 @@ public class AssessmentServlet extends HttpServlet {
             queryingAssessment(printWriter);
 
             printWriter.println("</body></html>");
-        } catch (RepositoryException e) {
+        } catch (RepositoryException | IOException e) {
             log.error(e.getMessage());
-        } finally {
-            session.logout();
         }
     }
 
