@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "bdc339f8-0c60-4189-92b5-0e52658bc813",
+		"name": "Bloomreach API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllNodes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/site/restservices/api/nodes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"site",
+						"restservices",
+						"api",
+						"nodes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetQueryResult",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/site/restservices/api/nodes?q=Test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"site",
+						"restservices",
+						"api",
+						"nodes"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetNodeFromUUID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/site/restservices/api/nodes/ed307dfc-5774-4ac7-9feb-79b57e058bb2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"site",
+						"restservices",
+						"api",
+						"nodes",
+						"ed307dfc-5774-4ac7-9feb-79b57e058bb2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetNodeFromPath",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/site/restservices/api/nodes/jcr:system/jcr:activities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"site",
+						"restservices",
+						"api",
+						"nodes",
+						"jcr:system",
+						"jcr:activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BadRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/site/restservices/api/nodes/.../",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"site",
+						"restservices",
+						"api",
+						"nodes",
+						"...",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotFound",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/site/restservices/api/nodes/a/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"site",
+						"restservices",
+						"api",
+						"nodes",
+						"a",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
