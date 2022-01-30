@@ -7,3 +7,30 @@
   hippostd:foldertype: [new-translated-folder, new-document]
   hippotranslation:id: 996bcac5-86cf-49b5-a7a3-16a74863e814
   hippotranslation:locale: en
+  /test-folder:
+    jcr:primaryType: hippostd:folder
+    jcr:mixinTypes: ['hippo:named', 'hippotranslation:translated', 'mix:versionable']
+    jcr:uuid: 08470574-e9df-42ef-ac42-c1b12eaeb84e
+    hippo:name: Test Folder
+    hippostd:foldertype: [new-translated-folder, new-document]
+    hippotranslation:id: c599b11c-a5c5-40d4-8edb-f471ffcbcae0
+    hippotranslation:locale: en
+    /test4:
+      jcr:primaryType: hippostd:folder
+      jcr:mixinTypes: ['hippotranslation:translated', 'mix:versionable']
+      jcr:uuid: 5b666c75-5888-4bf4-af1c-d8d959b669b8
+      hippostd:foldertype: [new-translated-folder, new-document]
+      hippotranslation:id: 38a5f6a0-672b-4bdd-b35f-31aea3b11a9e
+      hippotranslation:locale: en
+  /test-folder-1:
+    jcr:primaryType: hippo:handle
+    jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+    jcr:uuid: 894db8f3-2c5e-4385-ac09-882ece1dbd64
+    hippo:name: Test Folder 1
+    /test-folder-1:
+      jcr:primaryType: selection:valuelist
+      jcr:mixinTypes: ['hippotranslation:translated', 'mix:referenceable']
+      jcr:uuid: 2f5e77b2-3011-4971-a922-122c23f7fba3
+      hippo:availability: [live, preview]
+      hippotranslation:id: 00512292-a28f-4040-8160-5324b27b6670
+      hippotranslation:locale: en

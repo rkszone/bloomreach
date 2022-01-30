@@ -2,12 +2,12 @@ package org.example.rest.client;
 
 import org.onehippo.cms7.services.eventbus.HippoEventListenerRegistry;
 
-public class List {
+public class CmsEventListenerInitializer {
 
-    private MyListener listener;
+    private CmsEventListener listener;
 
     public void init() {
-        listener = new MyListener();
+        listener = new CmsEventListener();
         HippoEventListenerRegistry.get().register(listener);
     }
 
